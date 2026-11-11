@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I'm Sorry ❤️</title>
+<style>
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Georgia',serif;
+  background:linear-gradient(135deg,#ffe1eb,#f8b8d0,#fce4ec);
+  overflow:hidden;
+  color:#923c60;
+}
+.heart {
+  position:fixed;
+  bottom:-30px;
+  animation:float 7s linear infinite;
+  opacity:.6;
+  pointer-events:none;
+}
+@keyframes float {
+  to { transform:translateY(-110vh) rotate(360deg); opacity:0; }
+}
+.card {
+  width:90%;
+  max-width:430px;
+  min-height:440px;
+  padding:35px 24px;
+  background:#ffffffdf;
+  border:1px solid white;
+  border-radius:28px;
+  box-shadow:0 15px 45px #b45b7b30;
+  text-align:center;
+  position:relative;
+  z-index:2;
+}
+.slide { display:none; animation:show .6s ease; }
+.slide.active { display:block; }
+@keyframes show {
+  from {opacity:0;transform:translateY(15px)}
+  to {opacity:1;transform:translateY(0)}
+}
+.emoji {font-size:65px;margin:18px 0;}
+h1 {font-size:30px;color:#bd527c;}
+p {font-size:17px;line-height:1.8;}
+button {
+  border:0;
+  border-radius:30px;
+  padding:13px 25px;
+  margin:9px 5px;
+  background:#d85d8b;
+  color:white;
+  font-size:15px;
+  cursor:pointer;
+  transition:.3s;
+}
+button:hover {transform:scale(1.07);background:#b93e70;}
+.secondary {background:#f3b5ca;color:#8f3558;}
+#progress {margin-top:20px;font-size:13px;color:#b65b7c;}
+
+/* Last page: flying kiss */
+.kissWrap {height:110px;margin:6px 0 0;animation:bob 2.4s ease-in-out 2s infinite;}
+.kiss {font-size:90px;line-height:1.2;display:inline-block;animation:fly 2s ease-out forwards;}
+@keyframes fly {
+  0% {transform:translate(-170px,90px) rotate(-25deg) scale(.4);opacity:0}
+  20% {opacity:1}
+  60% {transform:translate(10px,-20px) rotate(10deg) scale(1.2)}
+  100% {transform:translate(0,-6px) rotate(6deg) scale(1.1)}
+}
+@keyframes bob {
+  0%,100% {transform:translateY(0)}
+  50% {transform:translateY(-10px)}
+}
+.love {font-size:28px;color:#d4366f;margin:8px 0 0;}
+</style>
+</head>
+<body>
+
+<div class="card">
+
+<div class="slide active">
+  <div class="emoji">🥺💗</div>
+  <h1>Hey, My Love!</h1>
+  <p>I have something special to tell you...</p>
+  <p>Can you give me a little moment?</p>
+  <button onclick="next()">Open My Heart ❤️</button>
+</div>
+
+<div class="slide">
+  <div class="emoji">🧸🌷</div>
+  <h1>I'm Truly Sorry</h1>
+  <p>I know I made mistakes. I never wanted to hurt you.</p>
+  <p>Please believe that my apology comes from my heart.</p>
+  <button onclick="next()">Next 💕</button>
+  <button class="secondary" onclick="prev()">Back</button>
+</div>
+
+<div class="slide">
+  <div class="emoji">🌙❤️</div>
+  <h1>You Mean So Much</h1>
+  <p>You're special to me, more than words can explain.</p>
+  <p>I don't want misunderstandings to come between us.</p>
+  <p>I want to understand you better and do better.</p>
+  <button onclick="next()">One Last Thing 🥹</button>
+  <button class="secondary" onclick="prev()">Back</button>
+</div>
+
+<div class="slide">
+  <div class="emoji">💌💗</div>
+  <h1>Can You Forgive Me?</h1>
+  <p>I cannot change what happened, but I can try to make things better.</p>
+  <p>I'm sorry, from the bottom of my heart.</p>
+  <button onclick="forgive()">Yes, I Forgive You ❤️</button>
+  <button class="secondary" onclick="alert('Take your time. I will understand. 🥺')">I Need Time</button>
+  <button class="secondary" onclick="prev()">Back</button>
+</div>
+
+<div class="slide" id="lastSlide">
+  <div class="kissWrap"><div class="kiss">😘</div></div>
+  <h1>Thank You!</h1>
+  <p>Your happiness means a lot to me.</p>
+  <p>I will never repeat the same mistake i'will always take care of you ,meri jaan.</p>
+  <h2 class="love">I love you, Sameer ❤️</h2>
+</div>
+
+<div id="progress">Slide 1 of 5</div>
+</div>
+
+<script>
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+
+function showSlide() {
+  slides.forEach((s,i)=>s.classList.toggle('active',i===current));
+  document.getElementById('progress').innerText =
+    `Slide ${current+1} of 5`;
+  if (current === 4) {
+    const k = document.querySelector('.kiss');
+    k.style.animation = 'none';
+    void k.offsetWidth;
+    k.style.animation = '';
+    for (let n = 0; n < 12; n++) setTimeout(burst, n * 180);
+  }
+}
+
+function next() {
+  if(current<3) {current++;showSlide();}
+}
+
+function prev() {
+  if(current>0) {current--;showSlide();}
+}
+
+function forgive() {
+  current = 4;
+  showSlide();
+}
+
+function burst() {
+  const h = document.createElement('div');
+  h.className = 'heart';
+  h.innerHTML = ['💗','💕','❤️','💖','😘'][Math.floor(Math.random()*5)];
+  h.style.left = Math.random()*100 + 'vw';
+  h.style.fontSize = (20+Math.random()*24) + 'px';
+  h.style.opacity = .9;
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),7000);
+}
+
+setInterval(()=>{
+  const h=document.createElement('div');
+  h.className='heart';
+  h.innerHTML=['💗','💕','❤️','🌸'][Math.floor(Math.random()*4)];
+  h.style.left=Math.random()*100+'vw';
+  h.style.fontSize=(15+Math.random()*20)+'px';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),7000);
+},600);
+</script>
+
+</body>
+</html>
